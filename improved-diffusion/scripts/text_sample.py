@@ -82,14 +82,13 @@ def main():
     
     if args.training_mode=='discrete1':
         args.training_mode='discrete'
-
+    ########### 下面这两个分支完全相同
     if args.constrained is not None:
         from improved_diffusion.text_datasets import load_data_text
         model2, tokenizer = load_models(args.modality, args.experiment, args.model_name_or_path, args.in_channel,
                                         os.path.split(args.model_path)[0])
         print('conditional generation mode --> load data')
         rev_tokenizer = {v: k for k, v in tokenizer.items()}
-        print("rev_tokenizer",rev_tokenizer)  ### 执行的这个分支
 
         data = load_data_text(
             data_dir=args.data_dir,
@@ -106,7 +105,7 @@ def main():
         )
 
 
-    if args.training_mode=='rico' and not args.ungen:
+    if args.training_mode=='rico' and not args.ungen: ### not args.ungen 在这里执行
         from improved_diffusion.text_datasets import load_data_text
         model2, tokenizer = load_models(args.modality, args.experiment, args.model_name_or_path, args.in_channel,
                                         os.path.split(args.model_path)[0])
@@ -114,7 +113,7 @@ def main():
        
         rev_tokenizer = {v: k for k, v in tokenizer.items()}
         data = load_data_text(
-            data_dir=args.data_dir,
+            data_dir=args.data_dir,    ### 这个数据在哪里？ 
             batch_size=args.batch_size,
             seq_length=args.seq_length,
             class_cond=args.class_cond,
@@ -141,17 +140,19 @@ def main():
     while len(all_images) * args.batch_size < args.num_samples:
 
         ### prepare for the sampling ###
+        print(args.training_mode , not args.ungen)
         model_kwargs = {}
         if args.constrained is not None:
             batch, model_kwargs = next(data)         ############## 看看这个地方输入的是什么，输出是什么？
-            print(batch.shape,model_kwargs['input_ids'])
+            print(batch.shape,model_kwargs['input_ids'].shape)
 
             model_kwargs["y"]=model_kwargs.pop('input_ids').to(dist_util.dev())
             
         # rico here
         if args.training_mode=='rico' and not args.ungen:
             batch, types = next(data)
-            print("????",batch)
+            print("types:",types)
+  
             model_kwargs["y"]=types['input_ids'].to(dist_util.dev())
             if 'pad_mask' in types.keys():
                 model_kwargs["src_mask"]=types['pad_mask'].to(dist_util.dev())
