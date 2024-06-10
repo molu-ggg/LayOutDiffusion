@@ -899,14 +899,15 @@ class DiffusionTransformer(nn.Module):
                 input[i][:len(tmp)]=tmp
 
             if constrained=='type':
-                print("type constrained")
+                print("type constrained")  ###-
                 uniform=torch.ones(128)/128
                 m = Categorical(uniform)
                 noise=m.sample(torch.tensor([batch_size,self.content_seq_len])).to(device)+self.type_classes+5 
                 bbox_mask=torch.tensor([0,0,1,1,1,1]*20+[0]).to(device)  ## {⟨sos⟩c1l1t1r1b1∥ . . . ∥cN lN tN rN bN ⟨eos⟩  最后一个代表maks？也就是说保持0,1 位置的元素不变，在下面  
                 input=torch.where((bbox_mask==1)&(input==mask),noise,input) ###- 通过逻辑与操作 (bbox_mask == 1) & (input == mask)，重新赋值的位置为两个条件都满足的那些位置： input 的这些位置被 noise 的对应值替换。
                 sample_start_step=160
-                print("it' ok")
+         
+                
 
             if self.ori_schedule_type.startswith('gaussian_refine_pow2.5_wo_bbox_absorb'): #wo bbox absorb
                 print("wo type absorb")
