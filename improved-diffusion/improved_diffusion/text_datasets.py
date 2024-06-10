@@ -228,7 +228,7 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
             counter = Counter()
             for input_ids in sentence_lst:
                 counter.update(input_ids) ###- 使用 Counter 统计词频，并根据词频和特定规则构建词汇表字典 vocab_dict。
-    print("load_vocab",load_vocab)
+    # print("load_vocab",load_vocab)
 
     if load_vocab is None:
 
@@ -236,8 +236,8 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
             vocab_dict = {'PAD':0}
         else:
             vocab_dict = {'START': 0, 'END': 1, 'UNK':2, 'PAD':3, '|':4 }
-        print(vocab_dict)
-        print(counter.items())
+        # print(vocab_dict)
+        # print(counter.items())
         for k, v in counter.items():
             if v > 0: ###- 这里我改成了10---》 0 
                 if k not in [str(num) for num in range(128)] and k not in vocab_dict:
@@ -284,7 +284,7 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
         result_train_lst = helper_tokenize_encode_cond(sentence_lst, vocab_dict, model, seq_length, data_args)
     # print(result_train_lst[0]['hidden_states'],'hidden state in corpus')
     print("_______________________________")
-    print(result_train_lst[:1])
+    # print(result_train_lst[:1])
     return {'train': result_train_lst}, model
 
 
@@ -308,7 +308,7 @@ class TextDataset(Dataset):
         # git add .
 
     def __len__(self):
-        print("hello")
+
         return self.length
 
     def __getitem__(self, idx):

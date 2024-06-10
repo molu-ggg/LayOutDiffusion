@@ -10,7 +10,7 @@ import blobfile as bf
 from mpi4py import MPI
 import torch as th
 import torch.distributed as dist
-
+import platform
 # Change this to reflect your cluster layout.
 # The GPU for a given rank is (rank % GPUS_PER_NODE).
 GPUS_PER_NODE = 8
@@ -38,7 +38,10 @@ def setup_dist():
 
     port = comm.bcast(_find_free_port(), root=0)
     os.environ["MASTER_PORT"] = str(port)
-    dist.init_process_group(backend=backend, init_method="env://")
+    if platform.system() == "Windows":  
+        dist.init_process_group(backend="gloo", init_method="env://")
+    else:
+        dist.init_process_group(backend=backend, init_method="env://")
 
 
 def dev():

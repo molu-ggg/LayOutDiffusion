@@ -154,7 +154,7 @@ def main():
         model_kwargs = {}
         if args.constrained is not None:
             batch, model_kwargs = next(data)         ############## 看看这个地方输入的是什么，输出是什么？
-            print(batch.shape,model_kwargs['input_ids'].shape)
+            
 
             model_kwargs["y"]=model_kwargs.pop('input_ids').to(dist_util.dev())
             
@@ -173,6 +173,7 @@ def main():
                 low=0, high=NUM_CLASSES, size=(args.batch_size,), device=dist_util.dev()
             )
             model_kwargs["y"] = classes
+        print("if args.training_mode=='discrete':",  args.training_mode=='discrete')
         
         sample_fn = (
             diffusion.sample_fast if args.training_mode=='discrete' else diffusion.p_sample_loop if not args.use_ddim else diffusion.ddim_sample_loop
@@ -350,7 +351,7 @@ def main():
                     else:
                         indices = text_emb
                     tokenizer[args.vocab_size-1]='MASK'
-                    print(indices)
+                   
                     decoded_out = " ".join([tokenizer[int(i)] for i in indices.tolist()])
                     word_lst.append(decoded_out) ###- TODO 可以看看这个作用
                     ### 将这些单词或标记连接成一个字符串，其中单词之间用空格分隔。将解码后的字符串（decoded_out）添加到名为word_lst的列表中。

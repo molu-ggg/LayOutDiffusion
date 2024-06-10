@@ -926,11 +926,19 @@ class DiffusionTransformer(nn.Module):
             if multistep:
                 tmp=[]
             diffusion_list = [index for index in range(start_step-1, -1, -1-skip_step)]
+            flag = 1 
             if diffusion_list[-1] != 0:
                 diffusion_list.append(0)
-            for diffusion_index in tqdm(diffusion_list):
+            for diffusion_index in diffusion_list:
                 t = torch.full((batch_size,), diffusion_index, device=device, dtype=torch.long)
-                log_x_recon = self.cf_predict_start(log_z, model,y,t)
+                log_x_recon = self.cf_predict_start(log_z, model,y,t)  ###- 输入： log_z  输出： log_x_recon
+                print("============ model input and output============")
+                # if flag == 1 :
+                #     print(log_z) # torch.Size([20, 139, 121]) torch.Size([20, 139, 121])  batch , 139 = 128+5+5 ,121 是tensor长度
+                #     print(log_x_recon)
+                #     flag = 0 
+                #     return 
+ 
                 if diffusion_index > skip_step:
                     model_log_prob = self.q_posterior(log_x_start=log_x_recon, log_x_t=log_z, t=t-skip_step)
                 else:
