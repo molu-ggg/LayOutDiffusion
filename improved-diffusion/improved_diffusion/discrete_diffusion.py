@@ -508,7 +508,7 @@ class DiffusionTransformer(nn.Module):
         return log_probs
 
     def predict_start(self, log_x_t, model,y, t):          # p(x0|xt)
-        x_t = log_onehot_to_index(log_x_t)
+        x_t = log_onehot_to_index(log_x_t) # log_x_t.argmax(1)
         if self.amp == True:
             with autocast():
                 out = model(x_t, t,y=y)
@@ -902,10 +902,11 @@ class DiffusionTransformer(nn.Module):
                 print("type constrained")
                 uniform=torch.ones(128)/128
                 m = Categorical(uniform)
-                noise=m.sample(torch.tensor([batch_size,self.content_seq_len])).to(device)+self.type_classes+5
-                bbox_mask=torch.tensor([0,0,1,1,1,1]*20+[0]).to(device)
-                input=torch.where((bbox_mask==1)&(input==mask),noise,input)
+                noise=m.sample(torch.tensor([batch_size,self.content_seq_len])).to(device)+self.type_classes+5 
+                bbox_mask=torch.tensor([0,0,1,1,1,1]*20+[0]).to(device)  ## {⟨sos⟩c1l1t1r1b1∥ . . . ∥cN lN tN rN bN ⟨eos⟩  最后一个代表maks？也就是说保持0,1 位置的元素不变，在下面  
+                input=torch.where((bbox_mask==1)&(input==mask),noise,input) ###- 通过逻辑与操作 (bbox_mask == 1) & (input == mask)，重新赋值的位置为两个条件都满足的那些位置： input 的这些位置被 noise 的对应值替换。
                 sample_start_step=160
+                print("it' ok")
 
             if self.ori_schedule_type.startswith('gaussian_refine_pow2.5_wo_bbox_absorb'): #wo bbox absorb
                 print("wo type absorb")
@@ -915,7 +916,7 @@ class DiffusionTransformer(nn.Module):
                 bbox_mask=torch.tensor([0,0,1,1,1,1]*20+[0]).to(device)
                 input=torch.where((bbox_mask==1)&(input==mask),noise,input)
 
-            mask_logits=index_to_log_onehot(input,self.num_classes).exp()
+            mask_logits=index_to_log_onehot(input,self.num_classes).exp() # 将一个索引张量 x 转换为对数 one-hot 编码张量
 
         log_z = torch.log(mask_logits)
         start_step = int(sample_start_step)
