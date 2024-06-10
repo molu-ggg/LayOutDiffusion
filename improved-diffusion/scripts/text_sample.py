@@ -87,6 +87,16 @@ def main():
         from improved_diffusion.text_datasets import load_data_text
         model2, tokenizer = load_models(args.modality, args.experiment, args.model_name_or_path, args.in_channel,
                                         os.path.split(args.model_path)[0])
+        '''
+        load_models 的主要内容： model2 是新建的，tokenizer 是从vocab.json 文件获取的
+                    path_save_tokenizer = "{}/vocab.json".format(file)
+                    with open(path_save_tokenizer, "r") as f:
+                        vocab = json.load(f)
+                    tokenizer = {v: k for k, v in vocab.items()}
+                model = torch.nn.Embedding(len(tokenizer), emb_dim)
+                path_save = "{}/random_emb.torch".format(file)
+        model2 和 3  与  model 完全不同
+        '''
         print('conditional generation mode --> load data')
         rev_tokenizer = {v: k for k, v in tokenizer.items()}
 
@@ -113,7 +123,7 @@ def main():
        
         rev_tokenizer = {v: k for k, v in tokenizer.items()}
         data = load_data_text(
-            data_dir=args.data_dir,    ### 这个数据在哪里？ 
+            data_dir=args.data_dir,    ### 
             batch_size=args.batch_size,
             seq_length=args.seq_length,
             class_cond=args.class_cond,
@@ -150,7 +160,7 @@ def main():
             
         # rico here
         if args.training_mode=='rico' and not args.ungen:
-            batch, types = next(data)
+            batch, types = next(data) ###- 相当于是一个data_loader ，dataset是 TextDataset
             print("types:",types)
   
             model_kwargs["y"]=types['input_ids'].to(dist_util.dev())
@@ -166,7 +176,7 @@ def main():
         
         sample_fn = (
             diffusion.sample_fast if args.training_mode=='discrete' else diffusion.p_sample_loop if not args.use_ddim else diffusion.ddim_sample_loop
-        )
+        )###神功了一个类? 
 
         # prepare sample shape
         if args.mbr_sample > 1 and args.experiment_mode == 'conditional_gen':
@@ -183,9 +193,9 @@ def main():
         else:
             sample_shape = (args.batch_size, args.seq_length, args.in_channel)
 
-        if args.training_mode != 'discrete':
+        if args.training_mode != 'discrete': ###- 不是我们分支
             ### start sampling ###
-            sample = sample_fn(   ####################################################################################
+            sample = sample_fn(   
                 model,
                 sample_shape,
                 noise=(model.get_embeds(model_kwargs['y']) if args.constrained=='refine' else None),
@@ -220,7 +230,7 @@ def main():
             dist.all_gather(gathered_samples, sample)  # gather not supported with NCCL
             all_images.extend([sample.cpu().numpy() for sample in gathered_samples])
             logger.log(f"created {len(all_images) * args.batch_size} samples")
-
+###sample from  sample_fn  ---> gathered_samples,   all_images ---> arrs  ---> arr ---> word_lst
     arrs = np.concatenate(all_images, axis=0)
 
     ### gather output ###
@@ -234,9 +244,10 @@ def main():
         else:
             arrs=th.from_numpy(arrs).permute(1,0,2).numpy()
         arrs = arrs[: args.num_samples * args.mbr_sample]
-
+    
     for idx,arr in enumerate(arrs):
         ## post process starts here
+        ###- 下面不会执行
         if args.training_mode!='rico' and args.training_mode!='discrete' and diffusion.training_mode.startswith('e2e'): #normal rico seq
             word_lst_e2e = []
             x_t = th.tensor(arr).cuda()
@@ -254,7 +265,7 @@ def main():
                 else:
                     tokens = tokenizer.decode(seq.squeeze(-1))
                 word_lst_e2e.append(tokens)
-        
+        ###- 下面不会执行
         if args.ungen:
             all_labels = []
             x_t = th.tensor(arr).cuda()
@@ -265,12 +276,12 @@ def main():
             sample = cands.indices
             all_labels.append(sample.squeeze(-1).cpu())
             arr=bbox.cpu().numpy()
-        print("all_labels",all_labels)  ### None   这就没法完了呀
+
         
 
         if args.class_cond:
             label_arr = np.concatenate(all_labels, axis=0)
-            label_arr = label_arr[: args.num_samples]
+            label_arr = label_arr[: args.num_samples]  ###- null
         if dist.get_rank() == 0:
             shape_str = "x".join([str(x) for x in arr.shape])
             model_base_name = os.path.basename(os.path.split(args.model_path)[0]) + f'.{os.path.split(args.model_path)[1]}'
@@ -280,7 +291,7 @@ def main():
             if args.class_cond:
                 np.savez(out_path, arr, label_arr)
             else:
-                np.savez(out_path, arr)
+                np.savez(out_path, arr) ###- TODO 这里保存了什么？
         ## pose process ends here
 
         dist.barrier()
@@ -341,7 +352,8 @@ def main():
                     tokenizer[args.vocab_size-1]='MASK'
                     print(indices)
                     decoded_out = " ".join([tokenizer[int(i)] for i in indices.tolist()])
-                    word_lst.append(decoded_out)
+                    word_lst.append(decoded_out) ###- TODO 可以看看这个作用
+                    ### 将这些单词或标记连接成一个字符串，其中单词之间用空格分隔。将解码后的字符串（decoded_out）添加到名为word_lst的列表中。
 
             else: # no use
                 set_seed(101)

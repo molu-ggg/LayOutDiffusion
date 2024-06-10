@@ -48,6 +48,9 @@ def load_data_text(
         training_data, model = get_corpus_rocstory(data_args, model, seq_length,
                                             padding_mode=padding_mode, split=split,
                                             load_vocab=load_vocab)
+        '''
+        src1_valid.txt 三个文件， 然后分词，统计词频，取词频大于一定阈值（我设置了0)的东西，然后保存到 vocab.json
+        '''
 
     dataset = TextDataset(
         training_data,
@@ -80,6 +83,14 @@ def load_data_text(
     
     while True:
         yield from data_loader
+    '''
+    具体来说，yield from data_loader做了以下几件事：
+
+    它首先会从data_loader（假定它是一个生成器或迭代器）中获取第一个项目，并将该项目“yield”给外部调用者。
+    当外部调用者请求下一个项目时，yield from会再次从data_loader中获取下一个项目，并继续将其“yield”给外部调用者。
+    如果data_loader引发了一个异常，该异常会被直接传播到外部调用者。
+    当data_loader耗尽（即它不再有新的项目可yield）时，yield from语句也会完成。
+    '''
 
 def helper_tokenize_encode_cond(sentence_lst, vocab_dict, model, seqlen, data_args):
     result_train_lst = []
@@ -230,9 +241,9 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
         for k, v in counter.items():
             if v > 0: ###- 这里我改成了10---》 0 
                 if k not in [str(num) for num in range(128)] and k not in vocab_dict:
-                    vocab_dict[k] = len(vocab_dict)  ### 只存非数字的键
+                    vocab_dict[k] = len(vocab_dict)   
         for num in range(128):
-            vocab_dict[str(num)] = len(vocab_dict)
+            vocab_dict[str(num)] = len(vocab_dict) ### 这里存取词频大于一定阈值的东西，然后保存到 vocab.json
 
         path_save_vocab = f'{data_args.checkpoint_path}/vocab.json'
         print(f'save the vocab to {path_save_vocab}')
@@ -294,8 +305,10 @@ class TextDataset(Dataset):
         self.model_emb = model_emb
         # self.local_images = image_paths[shard:][::num_shards]
         # self.local_classes = None if classes is None else classes[shard:][::num_shards]
+        # git add .
 
     def __len__(self):
+        print("hello")
         return self.length
 
     def __getitem__(self, idx):
