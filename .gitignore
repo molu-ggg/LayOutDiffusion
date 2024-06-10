@@ -1,5 +1,6 @@
 pics
-data/raw_datasets/publaynet/
+data/raw_datasets 
+#/publaynet/
 tmp
 checkpoint
 generation_outputs
