@@ -18,7 +18,7 @@ GPUS_PER_NODE = 8
 SETUP_RETRY_COUNT = 3
 
 
-def setup_dist(): ###- 分布式进程组，以便在多个计算节点或多个GPU之间进行分布式训练。
+def setup_dist():
     """
     Setup a distributed process group.
     """
@@ -38,6 +38,7 @@ def setup_dist(): ###- 分布式进程组，以便在多个计算节点或多个
 
     port = comm.bcast(_find_free_port(), root=0)
     os.environ["MASTER_PORT"] = str(port)
+
     dist.init_process_group(backend=backend, init_method="env://")
 
 

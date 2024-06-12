@@ -13,4 +13,4 @@ scipy==1.7.1
 seaborn==0.11.2
 pycocotools==2.0.2  
 # conda install pycocotools   pip install pycocotools==2.0.6
-#pip install einops spacy
+#pip install einops

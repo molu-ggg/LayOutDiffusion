@@ -173,15 +173,12 @@ class TrainLoop:
             not self.lr_anneal_steps
             or self.step + self.resume_step < self.lr_anneal_steps
         ):
-            print( "train %",(self.step + self.resume_step) / self.lr_anneal_steps)
             batch, cond = next(self.data) #load data
 
             # print(batch.shape,'batch') #(bz, img**2, embed_dim) (64,144,64) (64,20,4)
             # print(cond['input_ids'].shape,'cond')# (bz, img**2) (64,144) (64,20)
-            print(1)
 
             self.run_step(batch, cond)  #single step
-            print(2)
 
             if self.step % self.log_interval == 0:
                 logger.dumpkvs()
@@ -195,7 +192,6 @@ class TrainLoop:
                 if os.environ.get("DIFFUSION_TRAINING_TEST", "") and self.step > 0:
                     return
             self.step += 1
-            print(3)
         # Save the last checkpoint if it wasn't already saved.
         if (self.step - 1) % self.save_interval != 0:
             self.save()

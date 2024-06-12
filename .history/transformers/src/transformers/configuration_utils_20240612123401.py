@@ -542,7 +542,7 @@ class PretrainedConfig(PushToHubMixin):
         """
         original_kwargs = copy.deepcopy(kwargs)
         # Get config dict associated with the base config file
-        print(pretrained_model_name_or_path, kwargs)
+        print(pretrained_model_name_or_path, **kwargs)
         config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
         
 

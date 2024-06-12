@@ -23,7 +23,7 @@ from functools import partial
 from improved_diffusion.test_util import get_weights, compute_logp
 from improved_diffusion.rounding import load_models, load_tokenizer
 import torch.distributed as dist
-os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+
 
 def main():
     args = create_argparser().parse_args()
@@ -37,10 +37,6 @@ def main():
     logger.log("creating model and diffusion...")
     model, diffusion = create_model_and_diffusion(
         **args_to_dict(args, model_and_diffusion_defaults().keys())
-    )
-    if model_path is not None :
-        model.load_state_dict(
-        dist_util.load_state_dict(args.model_path, map_location="cpu")
     )
 
     model.to(dist_util.dev()) #  DEBUG **
@@ -196,9 +192,6 @@ def create_argparser():
     parser.add_argument(
     "--e2e_train", type=str, default=os.getenv("AMLT_DATA_DIR", "/data")+'/processed_datasets/RICO_ltwh_random'
     # "--e2e_train", type=str, default=os.getenv("AMLT_DATA_DIR", "/data")+'/processed_datasets/RICO_nosep'
-    )
-    parser.add_argument( #
-    "--model_path", type=str, default=None,
     )
     add_dict_to_argparser(parser, defaults)
 

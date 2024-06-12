@@ -542,9 +542,8 @@ class PretrainedConfig(PushToHubMixin):
         """
         original_kwargs = copy.deepcopy(kwargs)
         # Get config dict associated with the base config file
-        print(pretrained_model_name_or_path, kwargs)
         config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
-        
+        print(pretrained_model_name_or_path, **kwargs)
 
         # That config file may point us toward another config file to use.
         if "configuration_files" in config_dict:
@@ -592,6 +591,7 @@ class PretrainedConfig(PushToHubMixin):
 
         try:
             # Load from URL or cache if already cached
+            print("-----------",config_file)
             resolved_config_file = cached_path(
                 config_file,
                 cache_dir=cache_dir,

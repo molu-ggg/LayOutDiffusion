@@ -283,7 +283,7 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
     elif data_args.experiment_mode == 'conditional_gen':
         result_train_lst = helper_tokenize_encode_cond(sentence_lst, vocab_dict, model, seq_length, data_args)
     # print(result_train_lst[0]['hidden_states'],'hidden state in corpus')
-    # print("_______________________________")
+    print("_______________________________")
     # print(result_train_lst[:1])
     return {'train': result_train_lst}, model
 

@@ -2090,7 +2090,6 @@ def get_from_cache(
         cache_dir = str(cache_dir)
 
     os.makedirs(cache_dir, exist_ok=True)
-    print("-------",cache_dir)
 
     headers = {"user-agent": http_user_agent(user_agent)}
     if isinstance(use_auth_token, str):

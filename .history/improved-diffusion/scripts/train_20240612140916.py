@@ -38,10 +38,6 @@ def main():
     model, diffusion = create_model_and_diffusion(
         **args_to_dict(args, model_and_diffusion_defaults().keys())
     )
-    if model_path is not None :
-        model.load_state_dict(
-        dist_util.load_state_dict(args.model_path, map_location="cpu")
-    )
 
     model.to(dist_util.dev()) #  DEBUG **
     # model.cuda() #  DEBUG **
@@ -196,9 +192,6 @@ def create_argparser():
     parser.add_argument(
     "--e2e_train", type=str, default=os.getenv("AMLT_DATA_DIR", "/data")+'/processed_datasets/RICO_ltwh_random'
     # "--e2e_train", type=str, default=os.getenv("AMLT_DATA_DIR", "/data")+'/processed_datasets/RICO_nosep'
-    )
-    parser.add_argument( #
-    "--model_path", type=str, default=None,
     )
     add_dict_to_argparser(parser, defaults)
 
