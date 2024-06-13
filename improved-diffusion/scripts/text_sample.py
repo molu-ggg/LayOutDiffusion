@@ -50,6 +50,7 @@ def main():
     
     dist_util.setup_dist()
     logger.configure()
+    ckpt_path = args.model_path
 
     # load configurations.
     config_path = os.path.join(os.path.split(args.model_path)[0], "training_args.json")
@@ -58,6 +59,7 @@ def main():
     training_args['batch_size'] = args.batch_size
     args.__dict__.update(training_args)
     args.sigma_small = True
+    args.model_path = ckpt_path
 
     args.constrained=constrained
     if args.constrained is not None and args.constrained.startswith("refine"):
@@ -87,6 +89,7 @@ def main():
         from improved_diffusion.text_datasets import load_data_text
         model2, tokenizer = load_models(args.modality, args.experiment, args.model_name_or_path, args.in_channel,
                                         os.path.split(args.model_path)[0])
+        print("---",args.modality, args.experiment, args.model_name_or_path, args.in_channel,os.path.split(args.model_path)[0])
         '''
         load_models 的主要内容： model2 是新建的，tokenizer 是从vocab.json 文件获取的
                     path_save_tokenizer = "{}/vocab.json".format(file)
@@ -99,6 +102,7 @@ def main():
         '''
         print('conditional generation mode --> load data')
         rev_tokenizer = {v: k for k, v in tokenizer.items()}
+        # print("tokenizer",rev_tokenizer)
 
         data = load_data_text(
             data_dir=args.data_dir,
@@ -173,7 +177,7 @@ def main():
                 low=0, high=NUM_CLASSES, size=(args.batch_size,), device=dist_util.dev()
             )
             model_kwargs["y"] = classes
-        print("if args.training_mode=='discrete':",  args.training_mode=='discrete')
+        # print("if args.training_mode=='discrete':",  args.training_mode=='discrete')
         
         sample_fn = (
             diffusion.sample_fast if args.training_mode=='discrete' else diffusion.p_sample_loop if not args.use_ddim else diffusion.ddim_sample_loop

@@ -136,13 +136,22 @@ class PubLayNetDataset(LayoutDataset):
 
 class RicoDataset(LayoutDataset):
 
-    labels = [
-        'Text', 'Image', 'Icon', 'List Item', 'Text Button', 'Toolbar',
-        'Web View', 'Input', 'Card', 'Advertisement', 'Background Image',
-        'Drawer', 'Radio Button', 'Checkbox', 'Multi-Tab', 'Pager Indicator',
-        'Modal', 'On/Off Switch', 'Slider', 'Map View', 'Button Bar', 'Video',
-        'Bottom Navigation', 'Number Stepper', 'Date Picker'
-    ]
+    # labels = [
+    #     'Text', 'Image', 'Icon', 'List Item', 'Text Button', 'Toolbar',
+    #     'Web View', 'Input', 'Card', 'Advertisement', 'Background Image',
+    #     'Drawer', 'Radio Button', 'Checkbox', 'Multi-Tab', 'Pager Indicator',
+    #     'Modal', 'On/Off Switch', 'Slider', 'Map View', 'Button Bar', 'Video',
+    #     'Bottom Navigation', 'Number Stepper', 'Date Picker'
+    # ]
+    labels =['床(正视)', '壁挂空调(正视)', '台灯(正视)', '落地床头柜(正视)', '床(左视)', '落地床头柜(左视)', 
+    '横向装饰画(左视)', '扫地机器人(正视)', '落地灯(右视)', '横向装饰画(正视)', '装饰画(左视)', '床与床头柜组合(正视)', 
+    '装饰画(正视)', '吊灯(正视)', '竖向装饰画(正视)', '衣帽架(正视)', '吸顶灯(正视)', '落地梳妆台(正视)', '床(右视)', 
+    '落地床头柜(右视)', '四门衣柜(左视)', '装饰画(右视)', '空气净化器(正视)', '床尾凳(正视)', '横向装饰画(右视)', 
+    '落地灯(左视)', '吸尘器(正视)', '加湿器(正视)', '多门衣柜(右视)', '单人床尾凳(正视)', '落地空调(正视)',
+    '落地梳妆台组合(正视)', '竖向装饰画(右视)', '四门衣柜(右视)', '壁挂空调(左视)', '落地灯(正视)', 
+    '空气净化器(右视)', '桌面加湿器(正视)', '多门衣柜(左视)', '落地无镜梳妆台组合(正视)', '扫地机器人(右视)', 
+    '双门衣柜(正视)', '竖向装饰画(左视)', '台灯(左视)', '壁挂空调(右视)', '吊灯(右视)', '洗地机(正视)', 
+    '落地梳妆台组合(右视)', '四门衣柜(正视)', '吸尘器(左视)', '落地梳妆台(右视)', '吸顶灯(左视)']
 
     def __init__(self,
                  root: str,

@@ -19,6 +19,7 @@ def load_models(modality, mode, model_name_or_path, emb_dim, file, extra_args=No
                 emb_dim = 1
         else:
             path_save_tokenizer = "{}/vocab.json".format(file)
+            # print("path_save_tokenizer",path_save_tokenizer)
             with open(path_save_tokenizer, "r") as f:
                 vocab = json.load(f)
             tokenizer = {v: k for k, v in vocab.items()}

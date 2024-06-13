@@ -198,7 +198,7 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
                     
                     # data_args.e2e_train='../data/processed_datasets/RICO_nosep'
                 path = f'{data_args.e2e_train}/src1_test.txt'
-                print(path)
+                # print(path)
             elif split == 'debug':
                 print('loading form the DEBUG set')
                 path = data_args.debug_path
@@ -219,6 +219,7 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
                         word_lst = [x for x in word_lst.split(" ")]
                        
                         sentence_lst.append(word_lst)
+            # print("sentence_lst",sentence_lst)
 
         # get tokenizer.
 
@@ -262,7 +263,8 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
                 vocab_dict.save_pretrained(data_args.checkpoint_path)
             else:
                 assert False, "invalid type of vocab_dict"
-
+        
+    # print("vocab_dict",path_save_vocab,vocab_dict)
 
     if model is None and data_args.experiment == 'random':
         model = torch.nn.Embedding(len(vocab_dict), data_args.in_channel)
@@ -283,7 +285,7 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
     elif data_args.experiment_mode == 'conditional_gen':
         result_train_lst = helper_tokenize_encode_cond(sentence_lst, vocab_dict, model, seq_length, data_args)
     # print(result_train_lst[0]['hidden_states'],'hidden state in corpus')
-    # print("_______________________________")
+    print("_______________________________")
     # print(result_train_lst[:1])
     return {'train': result_train_lst}, model
 

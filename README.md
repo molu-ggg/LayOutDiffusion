@@ -86,6 +86,9 @@ For instance, to conduct an inference task for the RICO sequence task, you can u
 cd improved-diffusion
 
 python scripts/batch_decode.py ../results/checkpoint/rico -1.0 ema 2000 2000 False -1 ungen
+
+python scripts/batch_decode.py ../results/checkpoint/rico_v3 -1.0 ema 250 2000 False -1 type
+python scripts/batch_decode.py ../results/checkpoint/rico_5 -1.0 ema 20 20 False -1 type
 ```
 
 For other inference tasks, you can modify this command to fit your needs. Here is the general structure of the command:
@@ -132,6 +135,8 @@ python json2metrics.py {path_to_generated_layouts}
 
 # e.g.
 python json2metrics.py ./results/generation_outputs/rico/ungen/rico.ema_0.9999_175000.pt.samples_-1.0_elem1.json
+
+python   json2metrics.py ./results/generation_outputs/rico_v3/type/rico_v3.ema_0.9999_030000.pt.samples_-1.0_elem1.json
 ```
 
 To generate images, use the command printed by the previous script. For example:

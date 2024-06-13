@@ -905,6 +905,8 @@ class DiffusionTransformer(nn.Module):
                 noise=m.sample(torch.tensor([batch_size,self.content_seq_len])).to(device)+self.type_classes+5 
                 bbox_mask=torch.tensor([0,0,1,1,1,1]*20+[0]).to(device)  ## {⟨sos⟩c1l1t1r1b1∥ . . . ∥cN lN tN rN bN ⟨eos⟩  最后一个代表maks？也就是说保持0,1 位置的元素不变，在下面  
                 input=torch.where((bbox_mask==1)&(input==mask),noise,input) ###- 通过逻辑与操作 (bbox_mask == 1) & (input == mask)，重新赋值的位置为两个条件都满足的那些位置： input 的这些位置被 noise 的对应值替换。
+                print("==========")
+                print(input[:2]) ###################这是model 的input 可能需要更多处理
                 sample_start_step=160
          
                 
@@ -932,7 +934,7 @@ class DiffusionTransformer(nn.Module):
             for diffusion_index in diffusion_list:
                 t = torch.full((batch_size,), diffusion_index, device=device, dtype=torch.long)
                 log_x_recon = self.cf_predict_start(log_z, model,y,t)  ###- 输入： log_z  输出： log_x_recon
-                print("============ model input and output============")
+                # print("============ model input and output============")
                 # if flag == 1 :
                 #     print(log_z) # torch.Size([20, 139, 121]) torch.Size([20, 139, 121])  batch , 139 = 128+5+5 ,121 是tensor长度
                 #     print(log_x_recon)

@@ -7,6 +7,7 @@ generation_outputs
 !results/checkpoint/README.md
 !results/generation_outputs/README.md
 run.sh
+
 # Byte-compiled / optimized / DLL files
 __pycache__/ 
 *.py[cod]
@@ -59,3 +60,5 @@ output*/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+.history
