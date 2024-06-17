@@ -33,7 +33,7 @@ def draw_images_from_results(dataset: str, dataset_dir: str, max_num_elements: i
             img_masks = img_labels > 0
             print(img_bboxes)
             visualization.save_image(img_bboxes.unsqueeze(dim=0), img_labels.unsqueeze(dim=0), img_masks.unsqueeze(dim=0), 
-                                    draw_colors, os.path.join(save_path, f'{idx:04d}_{key}.png'), canvas_size=(360, 240))
+                                    draw_colors, os.path.join(save_path, f'{idx:04d}_{key}.png'), canvas_size=(360, 360))
 
 
 if __name__ == '__main__':
