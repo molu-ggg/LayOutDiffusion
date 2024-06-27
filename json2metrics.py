@@ -25,8 +25,7 @@ for i, line in enumerate(lines):
     words = line.encode('utf-8').decode('unicode_escape').split(" ") ### 
     words_new = [word.strip('["').replace('"]\n', "") for word in words]
     lines[i] = words_new
-print(lines)
-print("len(lines)",len(lines))
+
 
 layouts = []
 for line in lines:
@@ -162,7 +161,6 @@ for layout in layouts_sep:
             if str.isdigit(element[1]):
                 print(element[0])
                 if element[0] in labels_RICO:
-                    print("??????????????")
                     labels.append(labels_RICO.index(element[0]) + 1)
                 else:
                     continue
