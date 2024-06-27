@@ -48,6 +48,7 @@ def load_data_text(
         training_data, model = get_corpus_rocstory(data_args, model, seq_length,
                                             padding_mode=padding_mode, split=split,
                                             load_vocab=load_vocab)
+        #training_data: input_idx,hidden_state 
         '''
         src1_valid.txt 三个文件， 然后分词，统计词频，取词频大于一定阈值（我设置了0)的东西，然后保存到 vocab.json
         '''
@@ -286,7 +287,7 @@ def get_corpus_rocstory(data_args, model, seq_length, padding_mode='block',
         result_train_lst = helper_tokenize_encode_cond(sentence_lst, vocab_dict, model, seq_length, data_args)
     # print(result_train_lst[0]['hidden_states'],'hidden state in corpus')
     print("_______________________________")
-    # print(result_train_lst[:1])
+    # print(len(result_train_lst[0]['input_ids'])) # 121 8
     return {'train': result_train_lst}, model
 
 
@@ -307,7 +308,7 @@ class TextDataset(Dataset):
         self.model_emb = model_emb
         # self.local_images = image_paths[shard:][::num_shards]
         # self.local_classes = None if classes is None else classes[shard:][::num_shards]
-        # git add .
+        # git add . 
 
     def __len__(self):
 
@@ -321,14 +322,17 @@ class TextDataset(Dataset):
         if self.model_arch != 'conv-unet':
             arr = np.array(self.text_datasets['train'][idx]['hidden_states'],
                            dtype=np.float32)
-            if self.eigen_transform  is not None:
+            
+            if self.eigen_transform  is not None: ###- No 
+              
                 old_shape = arr.shape
                 # arr = arr.reshape(1, -1) @ self.eigen_transform
                 arr = arr.reshape(1, -1) - self.eigen_transform['mean']
                 arr = arr @ self.eigen_transform['map']
                 arr = arr.reshape(old_shape)
                 
-            if hasattr(self.data_args, 'noise_level') and self.data_args.noise_level > 0:
+            if hasattr(self.data_args, 'noise_level') and self.data_args.noise_level > 0:  ###- No 
+   
                 # print(arr.dtype)
                 # print(self.data_args.noise_level, 'using the noise level.')
                 arr = arr + self.data_args.noise_level * np.random.randn(*arr.shape).astype(arr.dtype)
@@ -343,6 +347,8 @@ class TextDataset(Dataset):
             # if self.local_classes is not None:
             #     out_dict["y"] = np.array(self.local_classes[idx], dtype=np.int64)
             # print(arr[0],'arr0')
+            # print(arr[0])# [-0.92733526 -0.6027726  -0.46165252  0.1118736  -1.1187515   0.44825932 -0.40387246  1.1332226 ]
+            
             return arr, out_dict
 
 

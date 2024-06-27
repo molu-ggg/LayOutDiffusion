@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x4ee3;&#x7801;&#x89e3;&#x8bfb;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <p>键值对：这是pond的：</p>
+<pre><code class="language-python">{<span class="hljs-string">&quot;START&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&quot;END&quot;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&quot;UNK&quot;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&quot;PAD&quot;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&quot;|&quot;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&quot;figure&quot;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-number">7</span>, <span class="hljs-string">&quot;table&quot;</span>: <span class="hljs-number">8</span>, <span class="hljs-string">&quot;list&quot;</span>: <span class="hljs-number">9</span>, <span class="hljs-string">&quot;0&quot;</span>: <span class="hljs-number">10</span>, <span class="hljs-string">&quot;1&quot;</span>: <span class="hljs-number">11</span>, <span class="hljs-string">&quot;2&quot;</span>: <span class="hljs-number">12</span>, <span class="hljs-string">&quot;3&quot;</span>: <span class="hljs-number">13</span>, <span class="hljs-string">&quot;4&quot;</span>: <span class="hljs-number">14</span>, <span class="hljs-string">&quot;5&quot;</span>: <span class="hljs-number">15</span>, <span class="hljs-string">&quot;6&quot;</span>: <span class="hljs-number">16</span>, <span class="hljs-string">&quot;7&quot;</span>: <span class="hljs-number">17</span>, <span class="hljs-string">&quot;8&quot;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&quot;9&quot;</span>: <span class="hljs-number">19</span>, <span class="hljs-string">&quot;10&quot;</span>: <span class="hljs-number">20</span>, <span class="hljs-string">&quot;11&quot;</span>: <span class="hljs-number">21</span>, <span class="hljs-string">&quot;12&quot;</span>: <span class="hljs-number">22</span>, <span class="hljs-string">&quot;13&quot;</span>: <span class="hljs-number">23</span>, <span class="hljs-string">&quot;14&quot;</span>: <span class="hljs-number">24</span>, <span class="hljs-string">&quot;15&quot;</span>: <span class="hljs-number">25</span>, <span class="hljs-string">&quot;16&quot;</span>: <span class="hljs-number">26</span>, <span class="hljs-string">&quot;17&quot;</span>: <span class="hljs-number">27</span>, <span class="hljs-string">&quot;18&quot;</span>: <span class="hljs-number">28</span>, <span class="hljs-string">&quot;19&quot;</span>: <span class="hljs-number">29</span>, <span class="hljs-string">&quot;20&quot;</span>: <span class="hljs-number">30</span>, <span class="hljs-string">&quot;21&quot;</span>: <span class="hljs-number">31</span>, <span class="hljs-string">&quot;22&quot;</span>: <span class="hljs-number">32</span>, <span class="hljs-string">&quot;23&quot;</span>: <span class="hljs-number">33</span>, <span class="hljs-string">&quot;24&quot;</span>: <span class="hljs-number">34</span>, <span class="hljs-string">&quot;25&quot;</span>: <span class="hljs-number">35</span>, <span class="hljs-string">&quot;26&quot;</span>: <span class="hljs-number">36</span>, <span class="hljs-string">&quot;27&quot;</span>: <span class="hljs-number">37</span>, <span class="hljs-string">&quot;28&quot;</span>: <span class="hljs-number">38</span>, <span class="hljs-string">&quot;29&quot;</span>: <span class="hljs-number">39</span>, <span class="hljs-string">&quot;30&quot;</span>: <span class="hljs-number">40</span>, <span class="hljs-string">&quot;31&quot;</span>: <span class="hljs-number">41</span>, <span class="hljs-string">&quot;32&quot;</span>: <span class="hljs-number">42</span>, <span class="hljs-string">&quot;33&quot;</span>: <span class="hljs-number">43</span>, <span class="hljs-string">&quot;34&quot;</span>: <span class="hljs-number">44</span>, <span class="hljs-string">&quot;35&quot;</span>: <span class="hljs-number">45</span>, <span class="hljs-string">&quot;36&quot;</span>: <span class="hljs-number">46</span>, <span class="hljs-string">&quot;37&quot;</span>: <span class="hljs-number">47</span>, <span class="hljs-string">&quot;38&quot;</span>: <span class="hljs-number">48</span>, <span class="hljs-string">&quot;39&quot;</span>: <span class="hljs-number">49</span>, <span class="hljs-string">&quot;40&quot;</span>: <span class="hljs-number">50</span>, <span class="hljs-string">&quot;41&quot;</span>: <span class="hljs-number">51</span>, <span class="hljs-string">&quot;42&quot;</span>: <span class="hljs-number">52</span>, <span class="hljs-string">&quot;43&quot;</span>: <span class="hljs-number">53</span>, <span class="hljs-string">&quot;44&quot;</span>: <span class="hljs-number">54</span>, <span class="hljs-string">&quot;45&quot;</span>: <span class="hljs-number">55</span>, <span class="hljs-string">&quot;46&quot;</span>: <span class="hljs-number">56</span>, <span class="hljs-string">&quot;47&quot;</span>: <span class="hljs-number">57</span>, <span class="hljs-string">&quot;48&quot;</span>: <span class="hljs-number">58</span>, <span class="hljs-string">&quot;49&quot;</span>: <span class="hljs-number">59</span>, <span class="hljs-string">&quot;50&quot;</span>: <span class="hljs-number">60</span>, <span class="hljs-string">&quot;51&quot;</span>: <span class="hljs-number">61</span>, <span class="hljs-string">&quot;52&quot;</span>: <span class="hljs-number">62</span>, <span class="hljs-string">&quot;53&quot;</span>: <span class="hljs-number">63</span>, <span class="hljs-string">&quot;54&quot;</span>: <span class="hljs-number">64</span>, <span class="hljs-string">&quot;55&quot;</span>: <span class="hljs-number">65</span>, <span class="hljs-string">&quot;56&quot;</span>: <span class="hljs-number">66</span>, <span class="hljs-string">&quot;57&quot;</span>: <span class="hljs-number">67</span>, <span class="hljs-string">&quot;58&quot;</span>: <span class="hljs-number">68</span>, <span class="hljs-string">&quot;59&quot;</span>: <span class="hljs-number">69</span>, <span class="hljs-string">&quot;60&quot;</span>: <span class="hljs-number">70</span>, <span class="hljs-string">&quot;61&quot;</span>: <span class="hljs-number">71</span>, <span class="hljs-string">&quot;62&quot;</span>: <span class="hljs-number">72</span>, <span class="hljs-string">&quot;63&quot;</span>: <span class="hljs-number">73</span>, <span class="hljs-string">&quot;64&quot;</span>: <span class="hljs-number">74</span>, <span class="hljs-string">&quot;65&quot;</span>: <span class="hljs-number">75</span>, <span class="hljs-string">&quot;66&quot;</span>: <span class="hljs-number">76</span>, <span class="hljs-string">&quot;67&quot;</span>: <span class="hljs-number">77</span>, <span class="hljs-string">&quot;68&quot;</span>: <span class="hljs-number">78</span>, <span class="hljs-string">&quot;69&quot;</span>: <span class="hljs-number">79</span>, <span class="hljs-string">&quot;70&quot;</span>: <span class="hljs-number">80</span>, <span class="hljs-string">&quot;71&quot;</span>: <span class="hljs-number">81</span>, <span class="hljs-string">&quot;72&quot;</span>: <span class="hljs-number">82</span>, <span class="hljs-string">&quot;73&quot;</span>: <span class="hljs-number">83</span>, <span class="hljs-string">&quot;74&quot;</span>: <span class="hljs-number">84</span>, <span class="hljs-string">&quot;75&quot;</span>: <span class="hljs-number">85</span>, <span class="hljs-string">&quot;76&quot;</span>: <span class="hljs-number">86</span>, <span class="hljs-string">&quot;77&quot;</span>: <span class="hljs-number">87</span>, <span class="hljs-string">&quot;78&quot;</span>: <span class="hljs-number">88</span>, <span class="hljs-string">&quot;79&quot;</span>: <span class="hljs-number">89</span>, <span class="hljs-string">&quot;80&quot;</span>: <span class="hljs-number">90</span>, <span class="hljs-string">&quot;81&quot;</span>: <span class="hljs-number">91</span>, <span class="hljs-string">&quot;82&quot;</span>: <span class="hljs-number">92</span>, <span class="hljs-string">&quot;83&quot;</span>: <span class="hljs-number">93</span>, <span class="hljs-string">&quot;84&quot;</span>: <span class="hljs-number">94</span>, <span class="hljs-string">&quot;85&quot;</span>: <span class="hljs-number">95</span>, <span class="hljs-string">&quot;86&quot;</span>: <span class="hljs-number">96</span>, <span class="hljs-string">&quot;87&quot;</span>: <span class="hljs-number">97</span>, <span class="hljs-string">&quot;88&quot;</span>: <span class="hljs-number">98</span>, <span class="hljs-string">&quot;89&quot;</span>: <span class="hljs-number">99</span>, <span class="hljs-string">&quot;90&quot;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&quot;91&quot;</span>: <span class="hljs-number">101</span>, <span class="hljs-string">&quot;92&quot;</span>: <span class="hljs-number">102</span>, <span class="hljs-string">&quot;93&quot;</span>: <span class="hljs-number">103</span>, <span class="hljs-string">&quot;94&quot;</span>: <span class="hljs-number">104</span>, <span class="hljs-string">&quot;95&quot;</span>: <span class="hljs-number">105</span>, <span class="hljs-string">&quot;96&quot;</span>: <span class="hljs-number">106</span>, <span class="hljs-string">&quot;97&quot;</span>: <span class="hljs-number">107</span>, <span class="hljs-string">&quot;98&quot;</span>: <span class="hljs-number">108</span>, <span class="hljs-string">&quot;99&quot;</span>: <span class="hljs-number">109</span>, <span class="hljs-string">&quot;100&quot;</span>: <span class="hljs-number">110</span>, <span class="hljs-string">&quot;101&quot;</span>: <span class="hljs-number">111</span>, <span class="hljs-string">&quot;102&quot;</span>: <span class="hljs-number">112</span>, <span class="hljs-string">&quot;103&quot;</span>: <span class="hljs-number">113</span>, <span class="hljs-string">&quot;104&quot;</span>: <span class="hljs-number">114</span>, <span class="hljs-string">&quot;105&quot;</span>: <span class="hljs-number">115</span>, <span class="hljs-string">&quot;106&quot;</span>: <span class="hljs-number">116</span>, <span class="hljs-string">&quot;107&quot;</span>: <span class="hljs-number">117</span>, <span class="hljs-string">&quot;108&quot;</span>: <span class="hljs-number">118</span>, <span class="hljs-string">&quot;109&quot;</span>: <span class="hljs-number">119</span>, <span class="hljs-string">&quot;110&quot;</span>: <span class="hljs-number">120</span>, <span class="hljs-string">&quot;111&quot;</span>: <span class="hljs-number">121</span>, <span class="hljs-string">&quot;112&quot;</span>: <span class="hljs-number">122</span>, <span class="hljs-string">&quot;113&quot;</span>: <span class="hljs-number">123</span>, <span class="hljs-string">&quot;114&quot;</span>: <span class="hljs-number">124</span>, <span class="hljs-string">&quot;115&quot;</span>: <span class="hljs-number">125</span>, <span class="hljs-string">&quot;116&quot;</span>: <span class="hljs-number">126</span>, <span class="hljs-string">&quot;117&quot;</span>: <span class="hljs-number">127</span>, <span class="hljs-string">&quot;118&quot;</span>: <span class="hljs-number">128</span>, <span class="hljs-string">&quot;119&quot;</span>: <span class="hljs-number">129</span>, <span class="hljs-string">&quot;120&quot;</span>: <span class="hljs-number">130</span>, <span class="hljs-string">&quot;121&quot;</span>: <span class="hljs-number">131</span>, <span class="hljs-string">&quot;122&quot;</span>: <span class="hljs-number">132</span>, <span class="hljs-string">&quot;123&quot;</span>: <span class="hljs-number">133</span>, <span class="hljs-string">&quot;124&quot;</span>: <span class="hljs-number">134</span>, <span class="hljs-string">&quot;125&quot;</span>: <span class="hljs-number">135</span>, <span class="hljs-string">&quot;126&quot;</span>: <span class="hljs-number">136</span>, <span class="hljs-string">&quot;127&quot;</span>: <span class="hljs-number">137</span>}
+<span class="hljs-number">138</span> MASK 
+</code></pre>
+<h2 id="代码解读">代码解读</h2>
+<pre><code class="language-python">training_data ,model = get_corpus_rocstory(....)
+    <span class="hljs-keyword">return</span> result_train_lst,model
+dataset = TextDataset(
+    training_data,
+    seq_length,
+    data_args,
+    model_arch=data_args.model_arch,
+    shard=MPI.COMM_WORLD.Get_rank(),
+    num_shards=MPI.COMM_WORLD.Get_size(),
+)
+TextDataset __getitem__:
+    <span class="hljs-keyword">return</span> arr, out_dict
+    <span class="hljs-comment"># arr = np.array(self.text_datasets[&#x27;train&#x27;][idx][&#x27;hidden_states&#x27;],dtype=np.float32)</span>
+    <span class="hljs-comment">#out_dict : out_dict[&#x27;input_ids&#x27;] = np.array(self.text_datasets[&#x27;train&#x27;][idx][&#x27;input_ids&#x27;])</span>
+
+<span class="hljs-comment"># &#x27;hidden_states&#x27; 的来源：</span>
+model = torch.nn.Embedding(<span class="hljs-built_in">len</span>(vocab_dict), data_args.in_channel) <span class="hljs-built_in">len</span>(vocab_dict),<span class="hljs-number">8</span>
+hidden_state = model(torch.tensor(input_ids))
+</code></pre>
+<p>result_train_lst：</p>
+<pre><code class="language-python">[{<span class="hljs-string">&#x27;input_ids&#x27;</span>: [<span class="hljs-number">0</span>, <span class="hljs-number">8</span>, <span class="hljs-number">20</span>, <span class="hljs-number">24</span>, <span class="hljs-number">125</span>, <span class="hljs-number">69</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">20</span>, <span class="hljs-number">77</span>, <span class="hljs-number">125</span>, <span class="hljs-number">84</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">20</span>, <span class="hljs-number">88</span>, <span class="hljs-number">71</span>, <span class="hljs-number">129</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">75</span>, <span class="hljs-number">88</span>, <span class="hljs-number">125</span>, <span class="hljs-number">129</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">41</span>, <span class="hljs-number">21</span>, <span class="hljs-number">104</span>, <span class="hljs-number">23</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">20</span>, <span class="hljs-number">73</span>, <span class="hljs-number">125</span>, <span class="hljs-number">77</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-string">&#x27;hidden_states&#x27;</span>: [[-<span class="hljs-number">1.6222010850906372</span>, <span class="hljs-number">1.7222366333007812</span>, <span class="hljs-number">0.8530371785163879</span>, <span class="hljs-number">0.0408187098801136</span>, -<span class="hljs-number">0.5346421003341675</span>, <span class="hljs-number">0.8283897042274475</span>, -<span class="hljs-number">2.47684907913208</span>, -<span class="hljs-number">0.3852204382419586</span>], [<span class="hljs-number">0.5329328775405884</span>, <span class="hljs-number">1.5567169189453125</span>, <span class="hljs-number">0.15599234402179718</span>, <span class="hljs-number">1.5328624248504639</span>, -<span class="hljs-number">1.3395750522613525</span>, <span class="hljs-number">0.09910503029823303</span>, -<span class="hljs-number">0.42658814787864685</span>, -<span class="hljs-number">0.4373644292354584</span>], [<span class="hljs-number">1.2780152559280396</span>, -<span class="hljs-number">0.028085479512810707</span>,
+
+ (<span class="hljs-number">121</span>,)
+ (<span class="hljs-number">121</span>,<span class="hljs-number">8</span>) 
+ 
+</code></pre>
+<p><img src="file:////home/ubuntu/ygq/LayOutDiffusion/improved-diffusion/improved_diffusion/text_datasets.py#L287" alt="hidden_states"></p>
+<p>model = torch.nn.Embedding(len(tokenizer), emb_dim)</p>
+<p>train : <img src="file:////home/ubuntu/ygq/LayOutDiffusion/improved-diffusion/scripts/train.py#L148" alt="train"> Line 148
+batch, cond = next(self.data)</p>
+<h2 id="时间步的采样">时间步的采样：</h2>
+<p><img src="file:////home/ubuntu/ygq/LayOutDiffusion/improved-diffusion/improved_diffusion/train_util.py#L277" alt="schedule_sampler"> 277 行
+self.schedule_sampler=&quot;uniform&quot;,
+UniformSampler的策略非常简单：它为每个时间步长分配相同的权重。这意味着在采样过程中，每个时间步长被选中的概率是相等的
+<img src="file:////home/ubuntu/ygq/LayOutDiffusion/improved-diffusion/improved_diffusion/resample.py#L61" alt="UniformSampler"> # 也有可能跟Q有关系</p>
+<h2 id="noise的生成">noise的生成</h2>
+<p><img src="file:////home/ubuntu/ygq/LayOutDiffusion/improved-diffusion/improved_diffusion/discrete_diffusion.py#L763" alt="training_losses"></p>
+<p>Gumbel-Max 采样方法: <a href="https://cloud.tencent.com/developer/article/1901340">https://cloud.tencent.com/developer/article/1901340</a></p>
+<p>噪音采样，从<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo stretchy="false">(</mo><mi>x</mi><mi>t</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">q(xt|x0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord mathnormal">t</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 中采样，概率分布为：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo stretchy="false">(</mo><mi>x</mi><mi>t</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mi>c</mi><mi>a</mi><mi>t</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>t</mi></msub><mo separator="true">;</mo><msub><mi>Q</mi><mi>t</mi></msub><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">q(xt|x0)= cat(x_t;Q_tx_{t-1})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord mathnormal">t</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mord">0</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">Q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> where Cat(x_t; Q_tx_{t-1}) is a categorical distribution over the one-hot row vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">x_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> with probabilities given by the row vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Q</mi><mi>t</mi></msub><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">Q_tx_{t-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">Q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span>.</p>
+<p>噪音采样方法：uniform 均匀采样</p>
+<p><img src="file:////home/ubuntu/ygq/LayOutDiffusion/improved-diffusion/improved_diffusion/discrete_diffusion.py" alt="公式9,概率分布中参数随着时间t的选择"></p>
+<p><img src="file:////home/ubuntu/ygq/LayOutDiffusion/improved-diffusion/improved_diffusion/discrete_diffusion.py" alt="什么时候 Mask 阶段 "></p>
+<p>noise_schedule: gaussian_refine_pow2.5</p>
+<pre><code>if self.gaussian_matrix: #gaussian refine
+    at,at1, bt1,bt2, ct,ct1, att,att1, btt1,btt2, ctt,ctt1 = alpha_schedule(self.num_timesteps, N=self.num_classes-1, matrix_policy=1)
+</code></pre>
+<p><img src="file:////home/ubuntu/ygq/LayOutDiffusion/improved-diffusion/improved_diffusion/discrete_diffusion.py#L50" alt=""> 计算Q</p>
+<p>Noise Schedules: 一般是控制噪音生成的强度，或者从某个噪声分布（如标准正态分布）中采样噪音。
+python</p>
+<p>Model</p>
+<pre><code class="language-python">
+</code></pre>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>

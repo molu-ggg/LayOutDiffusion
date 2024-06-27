@@ -70,7 +70,7 @@ class TrainLoop:
         self.resume_checkpoint = resume_checkpoint
         self.use_fp16 = use_fp16
         self.fp16_scale_growth = fp16_scale_growth
-        self.schedule_sampler = schedule_sampler or UniformSampler(diffusion)
+        self.schedule_sampler = schedule_sampler or UniformSampler(diffusion) ###- schedule_sampler 有就是他，没有就是 后者
         self.weight_decay = weight_decay
         self.lr_anneal_steps = lr_anneal_steps
         self.gradient_clipping = gradient_clipping
@@ -174,14 +174,18 @@ class TrainLoop:
             or self.step + self.resume_step < self.lr_anneal_steps
         ):
             print( "train %",(self.step + self.resume_step) / self.lr_anneal_steps)
-            batch, cond = next(self.data) #load data
+            batch, cond = next(self.data) #load data   hidden_states,input_idxs
 
-            # print(batch.shape,'batch') #(bz, img**2, embed_dim) (64,144,64) (64,20,4)
-            # print(cond['input_ids'].shape,'cond')# (bz, img**2) (64,144) (64,20)
+            print(batch.shape,'batch') #(bz, s, embed_dim) (64,144,64) (64,20,4) torch.Size([batch_size, seq_length,hidden_states_embed_dim] ]) batch
+            print(cond['input_ids'].shape,'cond')# 1,121
             # print(1)
 
+            ## 训练
+
             self.run_step(batch, cond)  #single step
-            # print(2)
+            
+
+            ## 验证与保存
 
             if self.step % self.log_interval == 0:
                 logger.dumpkvs()
@@ -261,7 +265,7 @@ class TrainLoop:
 
 
     def forward_backward(self, batch, cond):
-        zero_grad(self.model_params)
+        zero_grad(self.model_params)  ###-每一轮再分子batch minibatch 
         for i in range(0, batch.shape[0], self.microbatch):
             micro = batch[i : i + self.microbatch].to(dist_util.dev())
             micro_cond = {
@@ -271,7 +275,8 @@ class TrainLoop:
             # micro_cond= cond[i : i + self.microbatch].to(dist_util.dev())
             last_batch = (i + self.microbatch) >= batch.shape[0]
             t, weights = self.schedule_sampler.sample(micro.shape[0], dist_util.dev())
-            # print(micro_cond.keys())
+            # 这里的weights在ScheduleSampler类中用于调整每个时间步长的损失贡献，以实现更精细的训练控制，并通过重要性采样技术来无偏地估计原始损失（或有偏地改变训练目标，如果进行了相应的修改）
+            
 
             #compute loss here
             # real compute in diffusion.training_losses

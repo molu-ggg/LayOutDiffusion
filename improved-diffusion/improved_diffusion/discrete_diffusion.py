@@ -105,7 +105,7 @@ def gaussian_matrix2(t,bt):
 
     return mat
 
-def alpha_schedule(time_step, N=100, att_1 = 0.99999, att_T = 0.000009, ctt_1 = 0.000009, ctt_T = 0.99999, matrix_policy=0, type_classes=25):
+def alpha_schedule(time_step, N=100, att_1 = 0.99999, att_T = 0.000009, ctt_1 = 0.000009, ctt_T = 0.99999, matrix_policy=0, type_classes=25): ###- 可能跟公式9有关，与参数有关
 
     if matrix_policy==1: #for gaussian refine
         sep=5
@@ -353,6 +353,10 @@ class DiffusionTransformer(nn.Module):
         return kl
 
     def q_pred_one_timestep(self, log_x_t, t):         # q(xt|xt_1)
+        '''
+        Diffusion模型通过逐步向数据中添加噪声来将其转变为随机噪声，然后再学习如何从噪声中恢复出原始数据。这个过程是逐步的，通常包含很多个时间步（time steps）。每个时间步都会增加一定量的噪声，直到数据完全变为噪声。这里的代码关注的是在给定当前时间步t的情况下，如何预测下一个时间步t+1的数据分布。
+        用到的at 等变量是noise_schedule gaussian_refine_pow2.5 生成的
+        '''
         device=log_x_t.device
         bz=log_x_t.shape[0]
 
@@ -430,7 +434,7 @@ class DiffusionTransformer(nn.Module):
 
         return log_probs
 
-    def q_pred(self, log_x_start, t):           # q(xt|x0)
+    def q_pred(self, log_x_start, t):           # q(xt|x0)  离散扩散模型中的加噪过程 ( q(x_t | x_0) )，即在给定初始状态 ( x_0 ) 的情况下生成时间步 ( t ) 的状态 ( x_t ）
         device=log_x_start.device
         t = (t + (self.num_timesteps + 1))%(self.num_timesteps + 1)
         bz=log_x_start.shape[0]
@@ -478,7 +482,7 @@ class DiffusionTransformer(nn.Module):
             log_add_exp(torch.zeros(bz,1,self.type_classes,device=device).clamp(min=1e-30).log() +log_1_min_cumprod_ct1, log_cumprod_ct1).exp(),
             log_add_exp(torch.zeros(bz,1,128,device=device).clamp(min=1e-30).log() +log_1_min_cumprod_ct, log_cumprod_ct).exp(),
             torch.ones(bz,1,1,device=device)],dim=-1),
-            ],dim=-2)
+            ],dim=-2)   ###- q_mats Q 
             matrix=torch.where(mask,matrix2,matrix1)
 
         elif self.wo_bbox_absorb:
@@ -631,17 +635,17 @@ class DiffusionTransformer(nn.Module):
         else:
             return out
 
-    def log_sample_categorical(self, logits):           # use gumbel to sample onehot vector from log probability
-        uniform = torch.rand_like(logits)
+    def log_sample_categorical(self, logits):           # use gumbel to sample onehot vector from log probability  Gumbel-Max 采样方法从[对数概率]分布中采样一个 one-hot 向量。
+        uniform = torch.rand_like(logits) ###- [0, 1) 区间内均匀分布的随机数的张量
         gumbel_noise = -torch.log(-torch.log(uniform + 1e-30) + 1e-30)
-        sample = (gumbel_noise + logits).argmax(dim=1)
+        sample = (gumbel_noise + logits).argmax(dim=1) ###- 对数概率分布上加 Gumbel 噪声
         log_sample = index_to_log_onehot(sample, self.num_classes)
         return log_sample
 
-    def q_sample(self, log_x_start, t):                 # diffusion step, q(xt|x0) and sample xt
+    def q_sample(self, log_x_start, t):                 # diffusion step, q(xt|x0) and sample xt log_sample 是从对数概率分布 log_EV_qxt_x0   ( q(x_t | x_0) )中使用 Gumbel-Max 采样方法得到的 one-hot 向量的对数表示。
         log_EV_qxt_x0 = self.q_pred(log_x_start, t)
         log_sample = self.log_sample_categorical(log_EV_qxt_x0)
-
+        
         return log_sample
 
     def q_sample_onestep(self, log_x_start, t):                 # diffusion step, q(xt|x0) and sample xt
@@ -753,15 +757,17 @@ class DiffusionTransformer(nn.Module):
 
         assert self.loss_type == 'vb_stochastic'
         x_start = x
+        print(",",x.shape)
         t, pt = self.sample_time(b, device, 'importance')
-        log_x_start = index_to_log_onehot(x_start, self.num_classes)
-        log_xt = self.q_sample(log_x_start=log_x_start, t=t) #gt x_t #use matrix
-        xt = log_onehot_to_index(log_xt)
+        log_x_start = index_to_log_onehot(x_start, self.num_classes) ###- log_x0
+        log_xt = self.q_sample(log_x_start=log_x_start, t=t) #gt x_t #use matrix  ###- logxt 加噪后的###############
+        xt = log_onehot_to_index(log_xt) 
 
         ############### go to p_theta function ###############
-        log_x0_recon = self.predict_start(log_xt, model,y=model_kwargs['input_ids'], t=t) 
+        log_x0_recon = self.predict_start(log_xt, model,y=model_kwargs['input_ids'], t=t)  ###- 从被噪声污染的数据 ( x_t ) 预测初始数据 ( x_0 )
 
-        log_model_prob = self.q_posterior(log_x_start=log_x0_recon, log_x_t=log_xt, t=t)      # go through q(xt_1|xt,x0) #pred x_t
+        log_model_prob = self.q_posterior(log_x_start=log_x0_recon, log_x_t=log_xt, t=t)      # go through q(xt_1|xt,x0) #pred x_t 
+        ###- q_posterior 在扩散模型中用于计算后验分布 ( q(x_{t-1} | x_t, x_0) )，即在给定当前时间步长的噪声数据 ( x_t ) 和初始数据 ( x_0 ) 的情况下，前一个时间步长的噪声数据 ( x_{t-1} ) 的分布
 
         ################## compute acc list ################
         x0_recon = log_onehot_to_index(log_x0_recon)
@@ -781,7 +787,7 @@ class DiffusionTransformer(nn.Module):
         log_true_prob = self.q_posterior(log_x_start=log_x_start, log_x_t=log_xt, t=t)
 
         # compute loss
-        kl = self.multinomial_kl(log_true_prob, log_model_prob)
+        kl = self.multinomial_kl(log_true_prob, log_model_prob) ###- log_true_prob q(xt-1|xt)  [q(x0|xt)]    log_model_prob:p(xt-1|xt) [p(x0|xt)]
         
         mask_region = (xt == self.num_classes-1).float()
         mask_weight = mask_region * self.mask_weight[0] + (1. - mask_region) * self.mask_weight[1]
@@ -789,12 +795,12 @@ class DiffusionTransformer(nn.Module):
         kl = kl * mask_weight
         kl = sum_except_batch(kl)
         
-        decoder_nll = -log_categorical(log_x_start, log_model_prob)
+        decoder_nll = -log_categorical(log_x_start, log_model_prob)  ###-  Eq.11 && 10
         decoder_nll = sum_except_batch(decoder_nll)
 
         mask = (t == torch.zeros_like(t)).float()
 
-        kl_loss = mask * decoder_nll + (1. - mask) * kl
+        kl_loss = mask * decoder_nll + (1. - mask) * kl ###- 
 
         Lt2 = kl_loss.pow(2)
         Lt2_prev = self.Lt_history.to(model.device).gather(dim=0, index=t)
@@ -808,23 +814,26 @@ class DiffusionTransformer(nn.Module):
         vb_loss={}
         vb_loss['loss1'] = loss1
 
+        # torch.Size([1, 186, 121])
+        # torch.Size([1, 185, 121])
+
         if self.auxiliary_loss_weight != 0 and is_train==True:
-            kl_aux = self.multinomial_kl(log_x_start[:,:-1,:], log_x0_recon[:,:-1,:])
+            kl_aux = self.multinomial_kl(log_x_start[:,:-1,:], log_x0_recon[:,:-1,:]) #
             kl_aux = kl_aux * mask_weight
             kl_aux = sum_except_batch(kl_aux)
-            kl_aux_loss = mask * decoder_nll + (1. - mask) * kl_aux
+            kl_aux_loss = mask * decoder_nll + (1. - mask) * kl_aux  
             if self.adaptive_auxiliary_loss == True:
                 addition_loss_weight = (1-t/self.num_timesteps) + 1.0
             else:
                 addition_loss_weight = 1.0
 
-            loss2 = addition_loss_weight * self.auxiliary_loss_weight * kl_aux_loss / pt
+            loss2 = addition_loss_weight * self.auxiliary_loss_weight * kl_aux_loss / pt  ###- Eq.11 
             vb_loss['loss2'] = loss2
             vb_loss['loss']=vb_loss['loss1']+vb_loss['loss2']
         else:
             vb_loss['loss'] = vb_loss['loss1']
         if self.rescale_weight:
-            vb_loss['loss']=vb_loss['loss']*0.2+0.8*2*vb_loss['loss']*(self.num_timesteps-t)/self.num_timesteps
+            vb_loss['loss']= vb_loss['loss']*0.2+ 0.8*2*vb_loss['loss']*(self.num_timesteps-t)/self.num_timesteps
         
         return vb_loss
 
